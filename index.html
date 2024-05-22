@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
+        *{
+            margin: 0px;
+            padding: 0px;
+            font-family: "Mukta", sans-serif;
+            font-weight: bold;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+        }
+        .head{
+            color: white;
+        }
+        .form{
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #1b1b1b;
+        }
+        .field , .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            outline: 0px;
+            border-style: none;
+        }
+        .field{
+            background: none;
+            border: 2px solid #1b1b1b;
+            transition: all ease-in-out 0.2s;
+            border-bottom: 2px solid lime;
+            color: white;
+        }
+        .field::placeholder{
+            color: white;
+        }
+        .field:focus{
+            border: 2px solid lime;
+        }
+        .btn{
+            color: lime;
+            background-color: #1b1b1b;
+            border: 2px solid lime;
+            transition: all ease-in-out 0.2s;
+        }
+        .btn:hover{
+            color: #1b1b1b;
+            border: 2px solid #1b1b1b;
+            background-color: lime;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <form action="/" method="post" class="form">
+        <p class="head">SIGN UP FORM</p>
+        <input type="text" placeholder="username" name="username" id="username" class="field">
+        <input type="password" placeholder="password" name="password" id="password" class="field">
+        <button class="btn" type="submit">Submit</button>
+    </form>
+</body>
+</html>
