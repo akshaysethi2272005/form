@@ -63,7 +63,12 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/" method="post" class="form">
+    <% if (messege) { %>
+        <script>
+            alert("incorrect credentials");
+        </script>
+    <% } %>
+    <form action="/response" method="post" class="form">
         <p class="head">SIGN UP FORM</p>
         <input type="text" placeholder="username" name="username" id="username" class="field">
         <input type="password" placeholder="password" name="password" id="password" class="field">

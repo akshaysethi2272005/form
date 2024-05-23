@@ -2,16 +2,30 @@ const express = require('express');
 const bodyparser = require("body-parser")
 const app = express();
 const port = 3000
-app.use(bodyparser.urlencoded({extended:true}));
-app.use(express.static('static'))
+users = [
+    {
+        "username": "samanyu103",
+        "password" : "sam10"
+    }
+]
+app.set('view engine','ejs');
+
+app.use(bodyparser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
-    res.sendFile(__dirname+'/index.html');
+    res.render('index',{messege:null})
 })
-app.post('/',(req , res) => {
+
+app.post('/response',(req , res) => {
     const username = req.body.username;
     const password = req.body.password;
-    console.log("username "+username.toString()+"\n" +"password "+password.toString());
-    res.send('Your Username is : '+username+"\n"+"you are hacked !");
+    const body = req.body;
+    if (username.trim() == '' || password.trim() == ''){
+        console.log("alert sent");
+        res.render('index',{messege:"alert"});    
+    }else{
+        console.log("username "+username.toString()+"\n" +"password "+password.toString());
+        res.render('response',{user:username,pass:password});
+    }
 })
   
 app.listen(port , () => {
