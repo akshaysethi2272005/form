@@ -3,9 +3,9 @@ document.getElementById("btn").addEventListener('click',() => {
     let password = document.getElementById("password").value.trim();
     if (username=='' || password == '') {
         alert("empty field");
-        window.location.replace(window.location.href);
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
+        // window.location.replace(window.location.href);
+        // document.getElementById("username").value = "";
+        // document.getElementById("password").value = "";
     }
 });
 

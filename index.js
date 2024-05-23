@@ -8,6 +8,10 @@ users = [
     {
         "username": "samanyu103",
         "password" : "sam10"
+    },
+    {
+        "username": "akshay",
+        "password" : "hi"    
     }
 ]
 app.set('view engine','ejs');
@@ -24,13 +28,24 @@ app.post('/',(req , res) => {
     const body = req.body;
     if (username.trim() == '' || password.trim() == ''){
         console.log("alert sent");
-        // res.render('index');
-        return;    
+        res.render('index');
+        // return;    
     }else{
-        console.log("username "+username.toString()+"\n" +"password "+password.toString());
-        // res.render('index',{message:null});
+        let ok= false;
+        users.forEach(user => {
+            if (user.username==username && user.password==password) {
+                ok=true;
+            }
+        });
+        if (ok) {
+            console.log("username "+username.toString()+"\n" +"password "+password.toString());
+            // res.render('index',{message:null});
 
-        res.render('response',{user:username,pass:password});
+            res.render('response',{user:username,pass:password});
+        }else{
+            alert("incorrect credentials");
+            res.render('index');
+        }
     }
 })
   
