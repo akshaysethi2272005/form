@@ -10,7 +10,8 @@ app.get('/', (req, res) => {
 app.post('/',(req , res) => {
     const username = req.body.username;
     const password = req.body.password;
-    console.log("username "+username.toString()+"\n" +"password "+password.toString());
+    const email= req.body.email_id
+    console.log("username "+username.toString()+"\n" +"password "+password.toString()+email.toString());
     res.send('Your Username is : '+username+"\n"+"you are hacked !");
 })
   

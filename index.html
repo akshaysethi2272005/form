@@ -42,10 +42,12 @@
             border-bottom: 2px solid lime;
             color: white;
         }
-        .field::placeholder{
-            color: white;
-        }
+        /* .field::placeholder{
+            color: rgb(216, 220, 215);
+        } */
         .field:focus{
+            color: #1b1b1b;
+            background-color: rgb(219, 234, 224);
             border: 2px solid lime;
         }
         .btn{
@@ -65,9 +67,11 @@
 <body>
     <form action="/" method="post" class="form">
         <p class="head">SIGN UP FORM</p>
-        <input type="text" placeholder="username" name="username" id="username" class="field">
-        <input type="password" placeholder="password" name="password" id="password" class="field">
+        <input type="text" placeholder="username" name="username" id="username" class="field" required>
+        <input type="password" placeholder="password" name="password" id="password" class="field" required>
+        <input type="email" placeholder="email id" name="email_id" id="email" class="field">
         <button class="btn" type="submit">Submit</button>
     </form>
 </body>
+<script src="index2.js"></script>
 </html>
