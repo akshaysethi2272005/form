@@ -65,18 +65,18 @@
     <title>Document</title>
 </head>
 <body>
-    <% if (messege) { %>
+    <% if (message) { %>
         <script>
             alert("incorrect credentials");
         </script>
     <% } %>
-    <form action="/response" method="post" class="form">
+    <form action="/" method="post" class="form">
         <p class="head">SIGN UP FORM</p>
-        <input type="text" placeholder="username" name="username" id="username" class="field" required>
-        <input type="password" placeholder="password" name="password" id="password" class="field" required>
-        <input type="email" placeholder="email id" name="email_id" id="email" class="field">
-        <button class="btn" type="submit">Submit</button>
+        <input type="text" placeholder="username" name="username" id="username" class="field">
+        <input type="password" placeholder="password" name="password" id="password" class="field">
+        <!-- <input type="email" placeholder="email id" name="email_id" id="email" class="field"> -->
+        <button class="btn" id="btn" type="submit">Submit</button>
     </form>
 </body>
-<script src="index2.js"></script>
+<script src="js/script.js"></script>
 </html>
