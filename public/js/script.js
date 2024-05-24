@@ -9,5 +9,7 @@ document.getElementById("btn").addEventListener('click',() => {
     }
 });
 
-
+document.getElementById("cna").addEventListener('click',() => {
+    window.location.replace(window.location.href.toString() + "create");
+})
 

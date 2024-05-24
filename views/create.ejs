@@ -17,7 +17,6 @@
             align-items: center;
             justify-content: center;
             background-color: black;
-            flex-direction: column;
         }
         .head{
             color: white;
@@ -66,20 +65,13 @@
     <title>Document</title>
 </head>
 <body>
-    <% if (ale) { %>
-        <script>
-            alert("<%= ale %>");
-        </script>
-    <% } %>
-    <form action="/" method="post" class="form">
-        <p class="head">SIGN UP FORM</p>
-        <input type="email" placeholder="username" name="username" id="username" class="field">
-        <input type="password" placeholder="password" name="password" id="password" class="field">
+
+    <form action="/create" method="post" class="form">
+        <p class="head">Account Create Form</p>
+        <input type="email" placeholder="username" name="cu" class="field">
+        <input type="password" placeholder="password" name="cp"  class="field">
         <!-- <input type="email" placeholder="email id" name="email_id" id="email" class="field"> -->
-        <button class="btn" id="btn" type="submit">Submit</button>
-        
-        <button class="btn" id="cna" type="button">Create Account</button>
+        <button class="btn" id="btn" type="submit">Create Account</button>
     </form>
 </body>
-<script src="js/script.js"></script>
 </html>

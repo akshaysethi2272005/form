@@ -3,7 +3,12 @@ const bodyparser = require("body-parser")
 const app = express();
 const port = 3000
 const path = require('path');
-
+const admin = require('firebase-admin');
+var serviceAccount = require("./auth-samm-firebase-adminsdk-kk62o-5a82f9ceca.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+const auth = admin.auth()
 users = [
     {
         "username": "samanyu103",
@@ -19,16 +24,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('index',{ale:null})
 })
-
 app.post('/',(req , res) => {
     const username = req.body.username;
     const password = req.body.password;
     const body = req.body;
     if (username.trim() == '' || password.trim() == ''){
         console.log("alert sent");
-        res.render('index');
+        res.render('index',{ale:null});
         // return;    
     }else{
         let ok= false;
@@ -43,12 +47,41 @@ app.post('/',(req , res) => {
 
             res.render('response',{user:username,pass:password});
         }else{
-            alert("incorrect credentials");
-            res.render('index');
+            res.render('index',{ale:"error"});
         }
     }
 })
   
+app.get("/create",(req,res)=> {
+    res.render('create')
+})
+app.post('/create',(req , res) => {
+    const username = req.body.cu;
+    const password = req.body.cp;
+    console.log(req.body)
+    const body = req.body;
+    if ( username.trim() == '' || password.trim() == ''){
+        console.log("alert sent");
+        res.render('create');
+        // return;    
+    }else{
+        console.log("username "+username.toString()+"\n" +"password "+password.toString());
+        auth.createUser({
+            uid:"abcdefghi",
+            email:username,
+            disabled:false,
+            password:password,
+            displayName:"Akshay Sethi"
+        }).then((user) => {
+            console.log(user.uid.toString() + " UID stored");
+        }).catch((err) => {
+            console.log(err);
+        })
+        res.render('created');
+        
+    }
+})
+
 app.listen(port , () => {
     console.log('server running at port '+port.toString());
 })
