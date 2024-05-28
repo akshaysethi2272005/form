@@ -4,7 +4,7 @@ const app = express();
 const port = 3000
 const path = require('path');
 const admin = require('firebase-admin');
-var serviceAccount = require("./auth-samm-firebase-adminsdk-kk62o-5a82f9ceca.json");
+var serviceAccount = require("./auth-sam-c8614-firebase-adminsdk-so9lh-59c590b9ee.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
@@ -26,12 +26,48 @@ app.post('/',(req , res) => {
         res.render('index',{ale:null});
         // return;    
     }else{
-        auth.getUserByEmail(username).then(value => {
-            console.log(value.passwordHash)
-        }).catch(err => {
-            console.log(err);
-            res.render('index',{ale:"invalid username"})
-        })
+        var cred=null;
+
+        firestore.collection('users')
+        .where('username', '==', username)
+        .get()
+        .then((querySnapshot) => {
+            if (querySnapshot.empty) {
+                res.render('index',{ale:"incorrect username"});
+            }
+            
+            let ok=false;
+            querySnapshot.forEach( (doc) => {
+                cred= doc.data();
+                if (cred.password == password) {
+                    ok=true;
+                } 
+            })
+            if (ok) {
+                console.log("logged in");
+                // res.send("logged in");
+                res.render("response",{user:username,pass:password});
+            }else {
+                res.render('index',{ale:"incorrect password"});
+            }
+
+          }
+        )
+
+
+
+
+
+        // auth.getUserByEmail(username).then(value => {
+        //     if (cred.password == password) {
+        //         res.render()
+        //     } else {
+        //         res.render('index', {ale:"invalid password"})
+        //     }
+        // }).catch(err => {
+        //     console.log(err);
+        //     res.render('index',{ale:"invalid username"})
+        // })
     }
 })
   
@@ -61,8 +97,9 @@ app.post('/create',(req , res) => {
             try{
                 firestore.collection('users').add({
                     username:username,
-                    hash:user.passwordHash,
-                    salt:user.passwordSalt
+                    password:password
+                    // hash:user.passwordHash,
+                    // salt:user.passwordSalt
                 })
             }catch(err){
                 console.log(err)
