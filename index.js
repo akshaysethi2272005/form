@@ -9,16 +9,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 const auth = admin.auth()
-users = [
-    {
-        "username": "samanyu103",
-        "password" : "sam10"
-    },
-    {
-        "username": "akshay",
-        "password" : "hi"    
-    }
-]
+const firestore = admin.firestore();
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,20 +26,12 @@ app.post('/',(req , res) => {
         res.render('index',{ale:null});
         // return;    
     }else{
-        let ok= false;
-        users.forEach(user => {
-            if (user.username==username && user.password==password) {
-                ok=true;
-            }
-        });
-        if (ok) {
-            console.log("username "+username.toString()+"\n" +"password "+password.toString());
-            // res.render('index',{message:null});
-
-            res.render('response',{user:username,pass:password});
-        }else{
-            res.render('index',{ale:"error"});
-        }
+        auth.getUserByEmail(username).then(value => {
+            console.log(value.passwordHash)
+        }).catch(err => {
+            console.log(err);
+            res.render('index',{ale:"invalid username"})
+        })
     }
 })
   
@@ -71,14 +54,24 @@ app.post('/create',(req , res) => {
             email:username,
             disabled:false,
             password:password,
-            displayName:"Akshay Sethi"
+            displayName:"Akshay Sethi",
+            emailVerified:false
         }).then((user) => {
             console.log(user.uid.toString() + " UID stored");
+            try{
+                firestore.collection('users').add({
+                    username:username,
+                    hash:user.passwordHash,
+                    salt:user.passwordSalt
+                })
+            }catch(err){
+                console.log(err)
+            }
         }).catch((err) => {
             console.log(err);
         })
         res.render('created');
-        
+
     }
 })
 
