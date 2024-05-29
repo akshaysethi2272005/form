@@ -31,5 +31,11 @@
         <p>username : <%= user %></p>
         <p>password : <%= pass %></p>
     </div>
+    <% if (ev == false && link != null) { %>
+        <a id="evl">verify email</a>
+        <script>
+            document.getElementById("evl").setAttribute("href","<%= link %>")
+        </script>
+    <% } %>
 </body>
 </html>
