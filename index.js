@@ -21,22 +21,12 @@ const firebase = require('firebase/app');
 firebase.initializeApp(firebase);
 const auth = admin.auth()
 const firestore = admin.firestore();
-const actionCodeSettings = {
+const action = {
     // URL you want to redirect back to. The domain (www.example.com) for
     // this URL must be whitelisted in the Firebase Console.
-    url: 'localhost:3000/',
+    url: 'https://auth-samm.web.app',
     // This must be true for email link sign-in.
     handleCodeInApp: true,
-    iOS: {
-      bundleId: 'com.example.ios',
-    },
-    android: {
-      packageName: 'com.example.android',
-      installApp: true,
-      minimumVersion: '12',
-    },
-    // FDL custom domain.
-    dynamicLinkDomain: 'coolapp.page.link',
   };
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -79,7 +69,8 @@ app.post('/',(req , res) => {
                     if(val.emailVerified === true){
                         res.render("response",{user:username,pass:password,ev:val.emailVerified, link:null});
                     }else{
-                        auth.generateEmailVerificationLink(cred.username,actionCodeSettings).then(li => {
+                        auth.generateEmailVerificationLink(cred.username,action).then(li => {
+                            console.log(li.toString())
                             res.render("response",{user:username,pass:password,ev:val.emailVerified, link:li});
                         }).catch((err) => {
                             console.log(err)
